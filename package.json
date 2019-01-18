@@ -1,0 +1,19 @@
+{
+  "name": "92tjdwhd-test-npm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.android.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/92tjdwhd/test-repo.git"
+  },
+  "author": "sungjong park",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/92tjdwhd/test-repo/issues"
+  },
+  "homepage": "https://github.com/92tjdwhd/test-repo#readme"
+}
