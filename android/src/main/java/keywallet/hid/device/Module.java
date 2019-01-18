@@ -21,10 +21,14 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.Callback;
 
 import java.lang.StringBuilder;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.security.auth.callback.Callback;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -47,7 +51,7 @@ public class Module extends ReactContextBaseJavaModule {
 
   @Override
   public String getName() {
-    return "Boilerplate";
+    return "KeyWalletHidDevice";
   }
 
   @ReactMethod
@@ -69,22 +73,22 @@ public class Module extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void BroadcastReceiver() {
+  public void BroadcastReceiver(Callback attached, Callback detached, Callback onConnetcted) {
 
     keyWalletHandler = new KeyWalletHandler(getReactApplicationContext(), new KeyWalletHandler.OnDeviceAttached() {
       @Override
       public void onAttachedEvent() {
-        Toast.makeText(getReactApplicationContext(), "장치가 휴대폰과 연결되었습니다.", Toast.LENGTH_SHORT).show();
+        attached.invoke();
       }
     }, new KeyWalletHandler.OnDeviceDetached() {
       @Override
       public void onDetached() {
-        Toast.makeText(getReactApplicationContext(), "장치가 휴대폰과 분리되었습니다.", Toast.LENGTH_SHORT).show();
+        detached.invoke();
       }
     }, new KeyWalletHandler.OnDeviceConnected() {
       @Override
       public void onConnectedEvent() {
-        Toast.makeText(getReactApplicationContext(), "장치와 연결되었습니다.", Toast.LENGTH_SHORT).show();
+        onConnetcted.invoke();
       }
     });
 
