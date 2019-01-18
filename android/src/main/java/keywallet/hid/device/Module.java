@@ -1,4 +1,4 @@
-package io.cmichel.boilerplate;
+package keywallet.hid.device;
 
 import android.widget.Toast;
 

@@ -1,4 +1,4 @@
-package io.cmichel.boilerplate;
+package keywallet.hid.device;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;
@@ -12,7 +12,6 @@ import java.util.List;
 
 public class Package implements ReactPackage {
 
-
     public List<Class<? extends JavaScriptModule>> createJSModules() {
         return Collections.emptyList();
     }
@@ -23,8 +22,7 @@ public class Package implements ReactPackage {
     }
 
     @Override
-    public List<NativeModule> createNativeModules(
-            ReactApplicationContext reactContext) {
+    public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
 
         modules.add(new Module(reactContext));

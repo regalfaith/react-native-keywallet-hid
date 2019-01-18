@@ -1,4 +1,4 @@
-package io.cmichel.boilerplate;
+package keywallet.hid.device;
 
 public interface KeyWalletDevice {
 
