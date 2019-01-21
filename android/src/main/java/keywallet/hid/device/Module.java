@@ -14,6 +14,7 @@ import android.hardware.usb.UsbInterface;
 import android.hardware.usb.UsbManager;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.NativeModule;
+import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -21,8 +22,7 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.bridge.Callback;
-
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 import java.lang.StringBuilder;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,19 +32,20 @@ import java.util.ArrayList;
 
 public class Module extends ReactContextBaseJavaModule {
 
-  private static final String DURATION_SHORT_KEY = "SHORT";
-  private static final String DURATION_LONG_KEY = "LONG";
-  private static final String ACTION_USB_PERMISSION = "io.cmichel.boilerplate.USB_PERMISSION";
+  private static final String ACTION_USB_PERMISSION = "keywallet.hid.device.USB_PERMISSION";
   public UsbManager mUsbManager;
   public UsbDevice device;
   public KeyWalletHidDevice mKeyWalletHidDevice;
   public KeyWalletHandler keyWalletHandler;
   Context mContext;
   ArrayList<KeyWalletHidDevice> keyWalletHidDeviceArray;
+  Callback attach,detach,onConnect;
+
 
   public Module(ReactApplicationContext reactContext) {
     super(reactContext);
     mContext = reactContext;
+   
   }
 
   @Override
@@ -71,25 +72,24 @@ public class Module extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void BroadcastReceiver(Callback attached, Callback detached, Callback onConnetcted) {
-
+  public void BroadcastReceiver() {  
     keyWalletHandler = new KeyWalletHandler(getReactApplicationContext(), new KeyWalletHandler.OnDeviceAttached() {
       @Override
-      public void onAttachedEvent() {
-        attached.invoke();
+      public void onAttachedEvent() {        
+      getReactApplicationContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("onAttachedDevice",null);
       }
     }, new KeyWalletHandler.OnDeviceDetached() {
       @Override
-      public void onDetached() {
-        detached.invoke();
+      public void onDetached() {  
+           getReactApplicationContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("onDetachedDevice",null);
       }
     }, new KeyWalletHandler.OnDeviceConnected() {
       @Override
       public void onConnectedEvent() {
-        onConnetcted.invoke();
+         getReactApplicationContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("onConnectedDevice",null);
       }
     });
-
+   
   }
 
   @ReactMethod
