@@ -45,7 +45,7 @@ public class Module extends ReactContextBaseJavaModule {
   public Module(ReactApplicationContext reactContext) {
     super(reactContext);
     mContext = reactContext;
-   
+   // reactContext.addActivityEventListener(this);
   }
 
   @Override
@@ -61,7 +61,8 @@ public class Module extends ReactContextBaseJavaModule {
       for (int i = 0; i < keyWalletHidDeviceArray.size(); i++) {
         WritableMap map = Arguments.createMap();
         map.putString("name", keyWalletHidDeviceArray.get(i).mDevicePName);
-        map.putInt("index", keyWalletHidDeviceArray.size() - 1);
+        map.putInt("Vid",keyWalletHidDeviceArray.get(i).mDeviceVID);
+        map.putInt("index", i);
         deviceArray.pushMap(map);
       }
       p.resolve(deviceArray);
@@ -105,9 +106,9 @@ public class Module extends ReactContextBaseJavaModule {
     try {
       boolean result = mKeyWalletHidDevice.IsCardPresent();
       if (result) {
-        map.putInt("result", 1);
+        map.putBoolean("result", true);
       } else {
-        map.putInt("result", 0);
+        map.putBoolean("result", false);
       }
       p.resolve(map);
     } catch (IOException e) {
@@ -120,7 +121,8 @@ public class Module extends ReactContextBaseJavaModule {
   public void PowerOn(Promise p) {
     try {
       mKeyWalletHidDevice.PowerOn();
-    } catch (IOException e) {
+      p.resolve(true);
+    } catch (Exception e) {
       p.reject(e);
     }
   }
@@ -129,6 +131,7 @@ public class Module extends ReactContextBaseJavaModule {
   public void PowerOff(Promise p) {
     try {
       mKeyWalletHidDevice.PowerOff();
+      p.resolve(true);
     } catch (IOException e) {
       p.reject(e);
     }
@@ -136,7 +139,6 @@ public class Module extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void Transceive(ReadableArray apdu, Promise p) {
-
     try {
       byte[] abOutReport = rnArrayToBytes(apdu);
       byte[] asd = mKeyWalletHidDevice.Transceive(abOutReport);
