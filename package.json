@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/92tjdwhd/test-repo.git"
+    "url": "git+https://github.com/regalfaith/react-native-keywallet-hid.git"
   },
-  "author": "sungjong park",
-  "license": "ISC",
+  "author": "Keypair Co., Ltd.",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/92tjdwhd/test-repo/issues"
+    "url": "https://github.com/regalfaith/react-native-keywallet-hid.git"
   },
-  "homepage": "https://github.com/92tjdwhd/test-repo#readme"
+  "homepage": "https://github.com/regalfaith/react-native-keywallet-hid#readme"
 }
